@@ -1,0 +1,13 @@
+:root{
+/* ink + paper */
+--black:#0A0A0A;--white:#FFFFFF;--cream:#FAF6EF;--cream-deep:#F2EDE2;
+/* accents sampled from the source screen */
+--yellow:#FFC91E;--pink:#FF3B6B;--purple:#7C5CF0;--green:#3CC63C;--lime:#A9D92A;--tan:#F8DCA4;--gray:#9C9C9C;
+/* neutral ramp */
+--gray-100:#EDEDED;--gray-200:#D9D9D9;--gray-300:#BDBDBD;--gray-400:#9C9C9C;--gray-500:#6E6E6E;--gray-600:#4A4A4A;
+/* semantic aliases */
+--surface-app:var(--yellow);--surface-screen:var(--cream);--surface-card:var(--white);--surface-sunken:var(--cream-deep);
+--text-strong:var(--black);--text-body:var(--black);--text-muted:var(--gray-400);--text-on-accent:var(--black);
+--border-ink:var(--black);--shadow-ink:var(--black);
+--accent-primary:var(--yellow);--accent-new:var(--pink);--accent-watch:var(--green);--accent-place:var(--lime);--accent-read:var(--tan);--accent-fav:var(--purple);--accent-travel:var(--pink);--accent-none:var(--gray);
+--focus-ring:var(--purple)}

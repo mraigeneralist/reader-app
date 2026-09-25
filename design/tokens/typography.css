@@ -1,0 +1,9 @@
+:root{
+--text-display:44px;--text-display-lh:1.02;
+--text-title:20px;--text-title-lh:1.2;
+--text-body-size:16px;--text-body-lh:1.35;
+--text-label:15px;--text-label-lh:1.25;
+--text-caption:13px;--text-caption-lh:1.2;
+--text-micro:11px;--text-micro-lh:1;
+--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;--weight-black:800;
+--tracking-display:-0.035em;--tracking-title:-0.02em;--tracking-body:-0.01em;--tracking-micro:0.04em}

@@ -1,56 +1,110 @@
-# Welcome to your Expo app 👋
+# Folio
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A personal reading app for Android. Import your own book files, organise them into
+categories, read them, highlight passages and look up words without leaving the page.
+Everything is stored on the device. There are no accounts and nothing is sent to a server.
+The one exception is the dictionary, which looks words up online.
 
-## Get started
+> Status: early development. The design system and Home screen are in place. Features
+> land one at a time (see the roadmap below).
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- **Import**: PDF, EPUB, MOBI, AZW3, FB2, DOCX, DOC, TXT and RTF from device storage
+  or any cloud provider in the Android file picker.
+- **Continue reading**: Home shows the books you're reading with progress. Opening a book
+  returns you to the exact position you left, even after a restart.
+- **Categories**: create, rename, recolour and delete categories, assign books, and browse by category.
+- **Finished books**: a book is marked finished when you reach the end (you can also mark or undo it by hand), and the Finished screen lists completion dates.
+- **Highlights**: select text and highlight it. Each book has a list of its highlights
+  with location and date. Tap one to jump back to it.
+- **Dictionary**: select a word, tap Define, and a sheet shows the pronunciation, part of speech,
+  definition and an example. Closing it returns you to the same spot on the page.
+- Search, table of contents, reading settings (font, size, spacing, theme, brightness),
+  onboarding and app settings.
 
-2. Start the app
+## Tech stack
 
-   ```bash
-   npx expo start
-   ```
+| Area | Choice |
+|---|---|
+| Framework | Expo SDK 57, React Native 0.86, TypeScript, React Compiler |
+| Runtime | Development build with `expo-dev-client` (Expo Go is not used) |
+| Navigation | Expo Router (file-based, in `src/app/`) |
+| Storage | `expo-sqlite` + Drizzle ORM; imported files live in app storage via `expo-file-system` |
+| Reader | `react-native-webview` running foliate-js (EPUB/MOBI/AZW3/FB2) and pdf.js (PDF); DOCX/DOC/TXT/RTF are converted to EPUB on import |
+| UI | Custom components built from the Stashly design system (`src/theme`, `src/components`), Archivo + JetBrains Mono fonts embedded with `expo-font`, Lucide icons, `@gorhom/bottom-sheet` |
+| Device APIs | `expo-document-picker`, `expo-brightness`, `expo-speech`, `expo-clipboard`, `expo-sharing` |
 
-In the output, you'll find options to open the app in a
+## Project structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+  app/          Screens and navigators (Expo Router)
+  components/   Design-system components: Button, Card, Cover, Surface…
+  features/     Screen-specific pieces, grouped by feature
+  theme/        Typed design tokens: colours, type, spacing, effects
+design/         Read-only copy of the design canvas and tokens
+assets/fonts/   Embedded font files
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Running on a physical Android device
 
-### Other setup steps
+This project uses a **development build**, a debug version of the app with the Expo dev tools
+built in. You build it once, install it on your phone, and then JavaScript changes reach the phone
+instantly through Fast Refresh.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+### Prerequisites
 
-## Learn more
+- Node.js 20 or newer
+- Android Studio, which provides the Android SDK, `adb` and a bundled JDK. Set `JAVA_HOME` to the
+  bundled JDK (`<Android Studio>/jbr`) and `ANDROID_HOME` to the SDK folder.
+- An Android phone with **Developer options** and **USB debugging** turned on
 
-To learn more about developing your project with Expo, look at the following resources:
+### First run
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm install
+adb devices                     # your phone should be listed as "device"
+npx expo run:android --device   # builds the app, installs it, starts Metro
+```
 
-## Join the community
+The first build takes around 10–15 minutes. When it finishes, the app opens on the phone and
+connects to the Metro dev server on your computer.
 
-Join our community of developers creating universal apps.
+### Daily development
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Once the app is installed, you only need the dev server:
+
+```bash
+npx expo start --dev-client
+```
+
+Open **Folio** on the phone. Saved changes appear immediately through Fast Refresh.
+
+**Rebuild with `npx expo run:android --device` after:**
+- adding a library that contains native code
+- changing `app.json` plugins or permissions
+- upgrading the Expo SDK
+
+### If the phone can't reach Metro
+
+Over USB, forward the port so the phone can reach your computer:
+
+```bash
+adb reverse tcp:8081 tcp:8081
+```
+
+Then reopen the app, or shake the phone and choose **Reload**.
+
+## Roadmap
+
+1. Design system + Home ✅
+2. Onboarding and empty states
+3. Import pipeline and library database
+4. Reader (EPUB/MOBI/AZW3/FB2, PDF, converted formats) with saved position
+5. Library, book detail, continue reading
+6. Categories
+7. Highlights
+8. Dictionary
+9. Finished books and end of book
+10. Search and app settings

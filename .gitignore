@@ -41,3 +41,15 @@ example
 # generated native folders
 /ios
 /android
+
+# secrets: never commit env files, keystores or credentials
+.env
+.env.*
+!.env.example
+*.keystore
+google-services.json
+credentials.json
+
+# build output
+*.apk
+*.aab

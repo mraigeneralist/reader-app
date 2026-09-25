@@ -1,0 +1,10 @@
+:root{
+--border-w:3px;--border-w-thin:2px;
+--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-pill:999px;
+--shadow-hard:5px 5px 0 var(--shadow-ink);
+--shadow-hard-sm:3px 3px 0 var(--shadow-ink);
+--shadow-hard-lg:8px 8px 0 var(--shadow-ink);
+--press-shift:3px;
+--ease-snap:cubic-bezier(.2,.9,.25,1);
+--dur-fast:90ms;
+--dur-base:160ms}
