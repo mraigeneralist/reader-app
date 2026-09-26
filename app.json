@@ -96,6 +96,15 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "expo-navigation-bar": {
+        "enforceContrast": false
+      },
+      "eas": {
+        "projectId": "b902c32d-15b4-4031-b9dd-597cdc005462"
+      }
     }
   }
 }
