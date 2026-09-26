@@ -1,12 +1,11 @@
-import type { LucideIcon } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
-import { border, colors, radius } from '@/theme';
+import { border, colors, radius, themed } from '@/theme';
 
-import { Icon } from './Icon';
+import { Icon, type IconGlyph } from './Icon';
 
 type Props = {
-  icon: LucideIcon;
+  icon: IconGlyph;
   color?: string;
   size?: number;
   iconSize?: number;
@@ -16,17 +15,24 @@ type Props = {
 export function IconTile({ icon, color = colors.gray, size = 52, iconSize }: Props) {
   return (
     <View style={[styles.tile, { width: size, height: size, backgroundColor: color }]}>
-      <Icon icon={icon} size={iconSize ?? Math.round(size * 0.46)} />
+      {/* Glyphs are black on colour tiles; on paper tiles they follow the ink colour. */}
+      <Icon
+        icon={icon}
+        size={iconSize ?? Math.round(size * 0.46)}
+        color={color === colors.white ? colors.black : colors.textOnAccent}
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  tile: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: border.width,
-    borderColor: colors.borderInk,
-    borderRadius: radius.md,
-  },
-});
+const styles = themed(() =>
+  StyleSheet.create({
+    tile: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: border.width,
+      borderColor: colors.borderInk,
+      borderRadius: radius.md,
+    },
+  }),
+);

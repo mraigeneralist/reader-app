@@ -1,14 +1,7 @@
 import { useState, type ReactNode } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  View,
-  type AccessibilityRole,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import { Pressable, StyleSheet, View, type AccessibilityRole, type StyleProp, type ViewStyle } from 'react-native';
 
-import { colors } from '@/theme';
+import { colors, themed } from '@/theme';
 
 type Props = {
   /** Hard-shadow offset in px (0 = no shadow). Also the distance the surface moves when pressed. */
@@ -66,18 +59,10 @@ export function Surface({
       {shadow > 0 && !shifted && !disabled && (
         <View
           pointerEvents="none"
-          style={[
-            styles.shadow,
-            radii,
-            { top: shadow, left: shadow, right: -shadow, bottom: -shadow },
-          ]}
+          style={[styles.shadow, radii, { top: shadow, left: shadow, right: -shadow, bottom: -shadow }]}
         />
       )}
-      <View
-        style={[
-          style,
-          shifted && shadow > 0 && { transform: [{ translateX: shadow }, { translateY: shadow }] },
-        ]}>
+      <View style={[style, shifted && shadow > 0 && { transform: [{ translateX: shadow }, { translateY: shadow }] }]}>
         {children}
       </View>
     </>
@@ -101,9 +86,11 @@ export function Surface({
   );
 }
 
-const styles = StyleSheet.create({
-  shadow: {
-    position: 'absolute',
-    backgroundColor: colors.shadowInk,
-  },
-});
+const styles = themed(() =>
+  StyleSheet.create({
+    shadow: {
+      position: 'absolute',
+      backgroundColor: colors.shadowInk,
+    },
+  }),
+);

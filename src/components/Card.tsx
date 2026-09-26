@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { border, colors, radius, shadow } from '@/theme';
+import { border, colors, radius, shadow, themed } from '@/theme';
 
 import { Surface } from './Surface';
 
@@ -52,20 +52,22 @@ export function Card({
   );
 }
 
-const styles = StyleSheet.create({
-  withTab: { paddingTop: TAB_OFFSET },
-  tabPosition: { position: 'absolute', top: 0, left: 12, width: 152, maxWidth: '80%' },
-  tab: {
-    height: 42,
-    borderWidth: border.width,
-    borderColor: colors.borderInk,
-    borderTopLeftRadius: radius.md,
-    borderTopRightRadius: radius.md,
-  },
-  card: {
-    backgroundColor: colors.surfaceCard,
-    borderWidth: border.width,
-    borderColor: colors.borderInk,
-    borderRadius: radius.lg,
-  },
-});
+const styles = themed(() =>
+  StyleSheet.create({
+    withTab: { paddingTop: TAB_OFFSET },
+    tabPosition: { position: 'absolute', top: 0, left: 12, width: 152, maxWidth: '80%' },
+    tab: {
+      height: 42,
+      borderWidth: border.width,
+      borderColor: colors.borderInk,
+      borderTopLeftRadius: radius.md,
+      borderTopRightRadius: radius.md,
+    },
+    card: {
+      backgroundColor: colors.surfaceCard,
+      borderWidth: border.width,
+      borderColor: colors.borderInk,
+      borderRadius: radius.lg,
+    },
+  }),
+);

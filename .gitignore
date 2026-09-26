@@ -53,3 +53,6 @@ credentials.json
 # build output
 *.apk
 *.aab
+
+# generated reader engine bundle (npm run build:web)
+/assets/web/

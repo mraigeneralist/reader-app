@@ -1,4 +1,4 @@
-# Folio
+# Shelf
 
 A personal reading app for Android. Import your own book files, organise them into
 categories, read them, highlight passages and look up words without leaving the page.
@@ -79,7 +79,7 @@ Once the app is installed, you only need the dev server:
 npx expo start --dev-client
 ```
 
-Open **Folio** on the phone. Saved changes appear immediately through Fast Refresh.
+Open **Shelf** on the phone. Saved changes appear immediately through Fast Refresh.
 
 **Rebuild with `npx expo run:android --device` after:**
 - adding a library that contains native code

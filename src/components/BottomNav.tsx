@@ -3,7 +3,7 @@ import { Folder, House, LibraryBig, Settings, type LucideIcon } from 'lucide-rea
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { border, colors, radius } from '@/theme';
+import { border, colors, radius, themed } from '@/theme';
 
 import { Icon } from './Icon';
 import { Txt } from './Txt';
@@ -46,7 +46,7 @@ export function BottomNav({ state, navigation }: BottomTabBarProps) {
                   ? { backgroundColor: colors.yellow, borderColor: colors.black }
                   : { backgroundColor: 'transparent', borderColor: 'transparent' },
               ]}>
-              <Icon icon={item.icon} size={22} />
+              <Icon icon={item.icon} size={22} color={active ? colors.textOnAccent : colors.black} />
             </View>
             <Txt variant="navLabel">{item.label}</Txt>
           </Pressable>
@@ -56,23 +56,25 @@ export function BottomNav({ state, navigation }: BottomTabBarProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  bar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: 10,
-    paddingHorizontal: 12,
-    backgroundColor: colors.white,
-    borderTopWidth: border.width,
-    borderTopColor: colors.black,
-  },
-  item: { width: 76, alignItems: 'center', gap: 5 },
-  pill: {
-    width: 48,
-    height: 36,
-    borderRadius: radius.md,
-    borderWidth: border.width,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = themed(() =>
+  StyleSheet.create({
+    bar: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingTop: 10,
+      paddingHorizontal: 12,
+      backgroundColor: colors.white,
+      borderTopWidth: border.width,
+      borderTopColor: colors.black,
+    },
+    item: { width: 76, alignItems: 'center', gap: 5 },
+    pill: {
+      width: 48,
+      height: 36,
+      borderRadius: radius.md,
+      borderWidth: border.width,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  }),
+);

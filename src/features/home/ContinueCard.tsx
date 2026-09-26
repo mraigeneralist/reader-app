@@ -1,62 +1,39 @@
 import { StyleSheet, View } from 'react-native';
 
-import { Button, Card, Cover, ProgressBar, Txt } from '@/components';
-import type { SampleBook } from '@/data/sample';
+import { BookProgress, BookRow, Button, Card, BookCover, Txt } from '@/components';
+import type { Book } from '@/db/schema';
 
 type Props = {
-  book: SampleBook;
+  book: Book;
   /** The large first card with a Continue button, or a compact row. */
   featured?: boolean;
   onPress?: () => void;
+  onOpenDetails?: () => void;
 };
 
-function Progress({ book }: { book: SampleBook }) {
-  const value = book.page / book.pageCount;
-  return (
-    <View style={styles.progress}>
-      <ProgressBar value={value} />
-      <View style={styles.progressLabels}>
-        <Txt variant="label">{Math.round(value * 100)}%</Txt>
-        <Txt variant="caption">
-          Page {book.page} of {book.pageCount}
-        </Txt>
-      </View>
-    </View>
-  );
-}
-
 /** A book on the Continue Reading shelf (screen 06). */
-export function ContinueCard({ book, featured, onPress }: Props) {
-  if (featured) {
-    return (
-      <Card padding={14} onPress={onPress} accessibilityLabel={`Continue ${book.title}`}>
-        <View style={styles.featuredRow}>
-          <Cover title={book.title} author={book.author} color={book.color} size="md" />
-          <View style={styles.featuredInfo}>
-            <View style={styles.names}>
-              <Txt variant="title">{book.title}</Txt>
-              <Txt variant="body" style={styles.authorLg}>
+export function ContinueCard({ book, featured, onPress, onOpenDetails }: Props) {
+  if (!featured) return <BookRow book={book} onPress={onPress} onLongPress={onOpenDetails} />;
+
+  return (
+    <Card padding={14} onPress={onPress} onLongPress={onOpenDetails} accessibilityLabel={`Continue ${book.title}`}>
+      <View style={styles.row}>
+        <BookCover book={book} size="md" />
+        <View style={styles.info}>
+          <View style={styles.names}>
+            <Txt variant="title" numberOfLines={3}>
+              {book.title}
+            </Txt>
+            {!!book.author && (
+              <Txt variant="body" style={styles.author} numberOfLines={2}>
                 {book.author}
               </Txt>
-            </View>
-            <Progress book={book} />
-            <Button tone="primary" size="sm" onPress={onPress}>
-              Continue
-            </Button>
+            )}
           </View>
-        </View>
-      </Card>
-    );
-  }
-
-  return (
-    <Card padding={12} onPress={onPress} accessibilityLabel={`Continue ${book.title}`}>
-      <View style={styles.compactRow}>
-        <Cover title={book.title} author={book.author} color={book.color} size="sm" />
-        <View style={styles.compactInfo}>
-          <Txt variant="bookTitle">{book.title}</Txt>
-          <Txt variant="author">{book.author}</Txt>
-          <Progress book={book} />
+          <BookProgress book={book} />
+          <Button tone="primary" size="sm" onPress={onPress}>
+            Continue
+          </Button>
         </View>
       </View>
     </Card>
@@ -64,12 +41,8 @@ export function ContinueCard({ book, featured, onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-  featuredRow: { flexDirection: 'row', gap: 16, alignItems: 'stretch' },
-  featuredInfo: { flex: 1, minWidth: 0, justifyContent: 'space-between', gap: 14 },
+  row: { flexDirection: 'row', gap: 16, alignItems: 'stretch' },
+  info: { flex: 1, minWidth: 0, justifyContent: 'space-between', gap: 14 },
   names: { gap: 4 },
-  authorLg: { fontSize: 15 },
-  compactRow: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  compactInfo: { flex: 1, minWidth: 0, gap: 6 },
-  progress: { gap: 6 },
-  progressLabels: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 },
+  author: { fontSize: 15 },
 });

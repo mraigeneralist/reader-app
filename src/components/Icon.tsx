@@ -1,15 +1,23 @@
-import type { LucideIcon } from 'lucide-react-native';
+import type { ComponentType } from 'react';
 
 import { colors } from '@/theme';
 
+/** Anything drawn like a Lucide icon: Lucide itself, or the app's own glyphs (category icons). */
+export type IconGlyph = ComponentType<{
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  absoluteStrokeWidth?: boolean;
+}>;
+
 type Props = {
-  icon: LucideIcon;
+  icon: IconGlyph;
   size?: number;
   color?: string;
 };
 
 /**
- * Lucide line icon. The design system uses Lucide (2px stroke, rounded joins)
+ * Line icon (Lucide, or a custom glyph on the same grid). The design system uses Lucide (2px stroke, rounded joins)
  * as a stand-in for the source's icon set, always solid black.
  */
 export function Icon({ icon: Glyph, size = 24, color = colors.black }: Props) {
